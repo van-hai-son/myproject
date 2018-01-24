@@ -1,0 +1,7 @@
+ongr_elasticsearch:
+    managers:
+        default:
+            index:
+                index_name: myproject
+            mappings:
+                - MyProjectBundle

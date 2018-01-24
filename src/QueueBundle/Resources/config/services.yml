@@ -1,0 +1,12 @@
+services:
+    provider.sqs:
+        class: QueueBundle\SQS\SimpleQueueService
+        arguments:
+            - '%aws_api_key%'
+            - '%aws_api_secret%'
+    queue:
+        class: QueueBundle\Queue
+        arguments:
+            - '@provider.sqs'
+            - '@monolog.logger.queue'
+            - '%sqs%'

@@ -1,0 +1,19 @@
+services:
+    myproject.shopping_model:
+        class: MyProjectBundle\Model\ShoppingModel
+        arguments:
+            - '@es.manager.default'
+            - '@doctrine.orm.entity_manager'
+            - '@monolog.logger.mailer'
+    mailer.create_order:
+        class: MyProjectBundle\MailerManager\CreateOrderMailer
+        arguments:
+            - '@mailer'
+    payment_manager:
+        class: MyProjectBundle\PaymentManager\PaymentManager
+        arguments:
+            - '@payment'
+    queue_manager:
+        class: MyProjectBundle\QueueManager\QueueManager
+        arguments:
+            - '@queue'

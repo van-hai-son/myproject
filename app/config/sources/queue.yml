@@ -1,0 +1,3 @@
+parameters:
+    sqs:
+        send_create_order_mail: https://sqs.ap-southeast-1.amazonaws.com/006544440668/mail

@@ -1,0 +1,8 @@
+parameters:
+    email_configuration:
+        global:
+            contact: Van Hai Son
+            contact_email: son.van@nfq.asia
+        create_order:
+            subject: Welcome To LMS
+            template: MyProject/template/create_order.mail.html.twig

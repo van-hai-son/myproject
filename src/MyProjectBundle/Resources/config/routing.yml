@@ -1,0 +1,29 @@
+# public routing
+myproject_view_product:
+    path:     /
+    defaults: { _controller: MyProjectBundle:Shopping:viewProduct }
+    methods:  [GET]
+myproject_view_order:
+    path:     /order
+    defaults: { _controller: MyProjectBundle:Shopping:viewOrder }
+    methods:  [GET]
+
+# AJAX routing
+myproject_ajax_get_product:
+    path:     /ajax_get_product
+    defaults: { _controller: MyProjectBundle:Shopping:ajaxGetProductByConditions }
+    methods:  [POST]
+myproject_ajax_create_order:
+    path:     /ajax_create_order
+    defaults: { _controller: MyProjectBundle:Shopping:ajaxCreateOrder }
+    methods:  [POST]
+
+# Test routing
+myproject_test:
+    path:     /test
+    defaults: { _controller: MyProjectBundle:Shopping:index }
+    methods:  [GET]
+myproject_ajax:
+    path:     /test/ajax
+    defaults: { _controller: MyProjectBundle:Shopping:ajax }
+    methods:  [POST]

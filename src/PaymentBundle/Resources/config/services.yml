@@ -1,0 +1,10 @@
+services:
+    provider.stripe:
+        class: PaymentBundle\Stripe\StripePayment
+        arguments:
+            - '%stripe_api_key%'
+    payment:
+        class: PaymentBundle\Payment
+        arguments:
+            - '@provider.stripe'
+            - '@monolog.logger.payment'
