@@ -51,7 +51,7 @@ class ShoppingModel extends BaseModel
      */
     public function createOrder($orderRequest)
     {
-        $code = rand(1000, 9999);
+        $code = strtoupper(bin2hex(random_bytes(4)));
         foreach ($orderRequest['order'] as $item) {
             $order = new Order();
             $order->setCustomerName($orderRequest['name'])
