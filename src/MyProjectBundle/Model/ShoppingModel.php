@@ -21,6 +21,10 @@ class ShoppingModel extends BaseModel
         return $this->getRepository(Order::class)->findBy($conditions);
     }
 
+    /**
+     * @param string $query
+     * @return array
+     */
     public function getProduct(string $query)
     {
         $productRepo = $this->getRepository(Product::class);
