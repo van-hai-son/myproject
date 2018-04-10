@@ -16,6 +16,3 @@ services:
 
 imports:
     - { resource: '@MyProjectBundle/Resources/config/services.yml' }
-    - { resource: '@MailerBundle/Resources/config/services.yml' }
-    - { resource: '@PaymentBundle/Resources/config/services.yml' }
-    - { resource: '@QueueBundle/Resources/config/services.yml' }

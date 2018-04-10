@@ -1,9 +1,12 @@
 <?php
+
 namespace MyProjectBundle\Document;
 
 use ONGR\ElasticsearchBundle\Annotation as ES;
 
 /**
+ * Class Product
+ * @package MyProjectBundle\Document
  * @ES\Document(type="product")
  */
 class Product extends Document

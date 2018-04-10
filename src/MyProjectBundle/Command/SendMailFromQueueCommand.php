@@ -2,7 +2,6 @@
 
 namespace MyProjectBundle\Command;
 
-use MyProjectBundle\QueueManager\QueueManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -28,11 +27,10 @@ class SendMailFromQueueCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $container = $this->getContainer();
-        $message = $container->get('queue_manager')->receiveMessage( QueueManager::SEND_CREATE_ORDER_MAIL);
+        $message = $container->get('queue_manager')->receiveMessage( 'send_create_order_mail');
         $messageArr = json_decode($message, true);
-        $orderList = $container->get('myproject.shopping_model')
-            ->getOrderByConditions(['code' => $messageArr['code']]);
-        $container->get('mailer.create_order')->send($orderList[0]);
+        $orderList = $container->get('myproject.shopping_model')->getOrderByConditions(['code' => $messageArr['code']]);
+        $container->get('mailer_manager')->send('create_order', $orderList[0]);
 
         sleep(1000);
     }

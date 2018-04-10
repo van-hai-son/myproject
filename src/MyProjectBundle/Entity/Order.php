@@ -5,8 +5,10 @@ namespace MyProjectBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * Class Order
+ * @package MyProjectBundle\Entity
  * @ORM\Table(name="`order`", indexes={@ORM\Index(name="order_idx", columns={"id"})})
+ * @ORM\Entity(repositoryClass="MyProjectBundle\Repository\MySQL\OrderRepository")
  */
 class Order extends Entity
 {

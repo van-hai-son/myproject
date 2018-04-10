@@ -4,6 +4,10 @@ namespace MyProjectBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * Class Entity
+ * @package MyProjectBundle\Entity
+ */
 abstract class Entity
 {
     /**

@@ -1,19 +1,91 @@
 services:
-    myproject.shopping_model:
-        class: MyProjectBundle\Model\ShoppingModel
-        arguments:
-            - '@es.manager.default'
-            - '@doctrine.orm.entity_manager'
-            - '@monolog.logger.mailer'
-    mailer.create_order:
-        class: MyProjectBundle\MailerManager\CreateOrderMailer
-        arguments:
-            - '@mailer'
-    payment_manager:
-        class: MyProjectBundle\PaymentManager\PaymentManager
-        arguments:
-            - '@payment'
+# queue service
     queue_manager:
-        class: MyProjectBundle\QueueManager\QueueManager
+        class: MyProjectBundle\Queue\QueueManager
         arguments:
-            - '@queue'
+            - '@queue.provider.sqs'
+            - '@monolog.logger.queue'
+            - '%sqs%'
+    queue.provider.sqs:
+        class: MyProjectBundle\Queue\Provider\SimpleQueueService
+        arguments:
+            - '%aws_api_key%'
+            - '%aws_api_secret%'
+# payment service
+    payment_manager:
+        class: MyProjectBundle\Payment\PaymentManager
+        arguments:
+            - '@payment.provider.stripe'
+            - '@monolog.logger.payment'
+    payment.provider.stripe:
+        class: MyProjectBundle\Payment\Provider\StripePayment
+        arguments:
+            - '%stripe_api_key%'
+# mailer
+    sender.provider.send_gird:
+        class: MyProjectBundle\Mailer\Provider\SendGridMailer
+        arguments:
+            - '%send_grid_api_key%'
+            - '@twig'
+    mailer_manager:
+        class: MyProjectBundle\Mailer\MailerManager
+        arguments:
+            - '@sender.provider.send_gird'
+            - '@monolog.logger.mailer'
+            - '%email_configuration%'
+# mysql repository
+    repository.mysql.order:
+        class: MyProjectBundle\Repository\MySQL\OrderRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - 'MyProjectBundle\Entity\Order'
+        calls:
+            - [setGenerator, ['@util.generator']]
+# elastic search repository
+    repository.elastic_search.product:
+        class: MyProjectBundle\Repository\ElasticSearch\ProductRepository
+        factory: ['@es.manager.default', getRepository]
+        arguments:
+            - 'MyProjectBundle\Document\Product'
+# validation
+    validation.order:
+        class: MyProjectBundle\Validation\OrderValidation
+    validation.product.get:
+        class: MyProjectBundle\Validation\ProductValidation
+# use case
+    use_case.order:
+        class: MyProjectBundle\UseCase\OrderUseCase
+        arguments:
+            - '@repository.elastic_search.product'
+            - '@event_dispatcher'
+            - '@myproject.event.order.create'
+            - '@myproject.event.payment.create'
+# util
+    util.generator:
+        class: MyProjectBundle\Util\Generator
+# transform
+    transform.order:
+        class: MyProjectBundle\Transform\OrderTransform
+    transform.product:
+        class: MyProjectBundle\Transform\ProductTransform
+# event listener
+    event_listener.order.create:
+        class: MyProjectBundle\EventListener\OrderListener
+        tags:
+            - { name: kernel.event_listener, event: event.order.create, method: createOrder }
+        arguments:
+            - '@repository.mysql.order'
+            - '@queue_manager'
+            - '@monolog.logger.failure'
+    event_lister.payment.create:
+        class: MyProjectBundle\EventListener\PaymentListener
+        tags:
+            - { name: kernel.event_listener, event: event.payment.create, method: createPayment }
+        arguments:
+            - '@payment_manager'
+            - '@monolog.logger.failure'
+# event
+    myproject.event.order.create:
+        class: MyProjectBundle\Event\OrderEvent
+    myproject.event.payment.create:
+        class: MyProjectBundle\Event\PaymentEvent

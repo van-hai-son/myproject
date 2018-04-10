@@ -1,5 +1,6 @@
 monolog:
     channels:
+        - 'failure'
         - 'mailer'
         - 'payment'
         - 'queue'
@@ -9,21 +10,27 @@ monolog:
             path: "%kernel.logs_dir%/%kernel.environment%.log"
             level: debug
             channels: [!event]
+        failure:
+            type: rotating_file
+            path: '%kernel.logs_dir%/failure/failure.log'
+            level: debug
+            max_files: 10
+            channels: ['failure']
         mailer:
-            type:     rotating_file
-            path:     '%kernel.logs_dir%/mailer/mailer.log'
-            level:    debug
+            type: rotating_file
+            path: '%kernel.logs_dir%/mailer/mailer.log'
+            level: debug
             max_files: 10
             channels: ['mailer']
         payment:
-            type:     rotating_file
-            path:     '%kernel.logs_dir%/payment/payment.log'
-            level:    debug
+            type: rotating_file
+            path: '%kernel.logs_dir%/payment/payment.log'
+            level: debug
             max_files: 10
             channels: ['payment']
         queue:
-            type:     rotating_file
-            path:     '%kernel.logs_dir%/queue/queue.log'
-            level:    debug
+            type: rotating_file
+            path: '%kernel.logs_dir%/queue/queue.log'
+            level: debug
             max_files: 10
             channels: ['queue']

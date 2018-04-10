@@ -17,9 +17,6 @@ class AppKernel extends Kernel
             new ONGR\ElasticsearchBundle\ONGRElasticsearchBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new MyProjectBundle\MyProjectBundle(),
-            new MailerBundle\MailerBundle(),
-            new PaymentBundle\PaymentBundle(),
-            new QueueBundle\QueueBundle()
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
