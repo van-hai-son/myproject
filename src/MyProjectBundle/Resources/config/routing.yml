@@ -1,19 +1,19 @@
 # public routing
 myproject_view_product:
     path:     /
-    defaults: { _controller: MyProjectBundle:Shopping:viewProduct }
+    defaults: { _controller: MyProjectBundle:Product:viewProduct }
     methods:  [GET]
 myproject_view_order:
     path:     /order
-    defaults: { _controller: MyProjectBundle:Shopping:viewOrder }
+    defaults: { _controller: MyProjectBundle:Order:viewOrder }
     methods:  [GET]
 
 # AJAX routing
 myproject_ajax_get_product:
     path:     /ajax_get_product
-    defaults: { _controller: MyProjectBundle:Shopping:ajaxGetProductByConditions }
+    defaults: { _controller: MyProjectBundle:Product:ajaxGetProductByConditions }
     methods:  [POST]
 myproject_ajax_create_order:
     path:     /ajax_create_order
-    defaults: { _controller: MyProjectBundle:Shopping:ajaxCreateOrder }
+    defaults: { _controller: MyProjectBundle:Order:ajaxCreateOrder }
     methods:  [POST]

@@ -38,8 +38,7 @@ class OrderListener
         OrderRepository $orderRepository,
         QueueManager $queueManager,
         Logger $logger
-    )
-    {
+    ) {
         $this->orderRepository = $orderRepository;
         $this->queueManager = $queueManager;
         $this->logger = $logger;

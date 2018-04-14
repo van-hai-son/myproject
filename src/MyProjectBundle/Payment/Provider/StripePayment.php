@@ -51,7 +51,7 @@ class StripePayment implements PaymentInterface
         Token::create(["card" => $cardInfo]);
         $result = Charge::create(
             $paymentInfo,
-            ["idempotency_key" => rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '=')]
+            ["idempotency_key" => $this->generateIdempotencyKey()]
         );
 
         return [
@@ -59,5 +59,13 @@ class StripePayment implements PaymentInterface
             'status' => ($result->status == 'succeeded') ? true : false,
             'data' => $result
         ];
+    }
+
+    /**
+     * @return string
+     */
+    private function generateIdempotencyKey()
+    {
+        return rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '=');
     }
 }

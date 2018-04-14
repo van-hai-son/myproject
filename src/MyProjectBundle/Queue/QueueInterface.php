@@ -17,7 +17,7 @@ interface QueueInterface
 
     /**
      * @param string $queueName
-     * @return string
+     * @return array
      */
     public function receiveMessage($queueName);
 }
