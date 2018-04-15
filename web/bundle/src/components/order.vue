@@ -1,6 +1,6 @@
 <template id="order-template">
   <div id="order">
-    <h1>Welcome to Your Order App</h1>
+    <h1>{{ msg }}</h1>
     <h2>Essential Links</h2>
     <ul>
       <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
@@ -19,15 +19,14 @@
 </template>
 
 <script>
-  Vue.component('order-component', {
-      template: '#order-template',
-      data: function () {
-          return [{
-              msg: 'Welcome to Your Vue.js App',
-              message: 'hello'
-          }]
-      }
-  })
+  export default {
+    data: function () {
+        return {
+            msg: 'Welcome to Your Order App'
+        }
+    },
+    template: '#order-template'
+  }
 </script>
 
 <style>
